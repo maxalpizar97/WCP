@@ -1,111 +1,44 @@
-:root {
-  font-family: system-ui, -apple-system, sans-serif;
-  line-height: 1.5;
-  color: #1a1a2e;
-  background: #f0f4f8;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-surface text-slate-100 font-sans antialiased;
+  }
 }
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+@layer components {
+  .card {
+    @apply bg-surface-card border border-surface-border rounded-xl p-4 md:p-5;
+  }
 
-body {
-  min-height: 100vh;
-}
+  .btn-primary {
+    @apply bg-accent text-surface font-semibold px-4 py-2.5 rounded-lg
+           hover:bg-accent-muted transition-colors disabled:opacity-50
+           disabled:cursor-not-allowed min-h-[44px];
+  }
 
-#root {
-  max-width: 720px;
-  margin: 0 auto;
-  padding: 2rem 1rem;
-}
+  .btn-secondary {
+    @apply bg-surface-elevated text-slate-200 font-medium px-4 py-2.5 rounded-lg
+           border border-surface-border hover:bg-surface-border transition-colors
+           min-h-[44px];
+  }
 
-h1 {
-  font-size: 1.75rem;
-  margin-bottom: 0.25rem;
-}
+  .input-field {
+    @apply w-full bg-surface-elevated border border-surface-border rounded-lg
+           px-3 py-2.5 text-slate-100 placeholder:text-slate-500
+           focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent
+           min-h-[44px];
+  }
 
-.subtitle {
-  color: #64748b;
-  margin-bottom: 2rem;
-}
+  .kpi-value {
+    @apply text-2xl md:text-3xl font-bold text-white;
+  }
 
-.card {
-  background: #fff;
-  border-radius: 12px;
-  padding: 1.5rem;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
-  margin-bottom: 1.5rem;
-}
-
-form {
-  display: grid;
-  gap: 0.75rem;
-}
-
-label {
-  font-size: 0.875rem;
-  font-weight: 500;
-}
-
-input, select {
-  padding: 0.5rem 0.75rem;
-  border: 1px solid #cbd5e1;
-  border-radius: 8px;
-  font-size: 1rem;
-}
-
-button {
-  margin-top: 0.5rem;
-  padding: 0.625rem 1.25rem;
-  background: #2563eb;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  font-size: 1rem;
-  cursor: pointer;
-}
-
-button:hover {
-  background: #1d4ed8;
-}
-
-button:disabled {
-  background: #94a3b8;
-  cursor: not-allowed;
-}
-
-.prediction-list {
-  list-style: none;
-  display: grid;
-  gap: 0.75rem;
-}
-
-.prediction-item {
-  padding: 1rem;
-  background: #f8fafc;
-  border-radius: 8px;
-  border: 1px solid #e2e8f0;
-}
-
-.match {
-  font-weight: 600;
-}
-
-.meta {
-  font-size: 0.875rem;
-  color: #64748b;
-  margin-top: 0.25rem;
-}
-
-.error {
-  color: #dc2626;
-  font-size: 0.875rem;
-}
-
-.empty {
-  color: #94a3b8;
-  text-align: center;
-  padding: 1rem;
+  .kpi-label {
+    @apply text-xs md:text-sm text-slate-400 uppercase tracking-wide;
+  }
 }

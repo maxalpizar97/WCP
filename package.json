@@ -1,8 +1,11 @@
 {
   "name": "wcp",
   "private": true,
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "World Cup 2026 Predictions",
+  "scripts": {
+    "ingest": "node scripts/ingest-history.js"
+  },
   "dependencies": {
     "@vercel/kv": "^3.0.0"
   }

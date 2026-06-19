@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const fs = require('fs');
 const path = require('path');
+const history = require('../lib/history');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -54,6 +55,41 @@ app.post('/api/predictions', (req, res) => {
   predictions.push(prediction);
   writePredictions(predictions);
   res.status(201).json(prediction);
+});
+
+app.get('/api/tournaments', (req, res) => {
+  const { year, upcoming } = req.query;
+  if (upcoming === 'true') return res.json(history.getUpcomingMatches());
+  if (year) return res.json(history.getMatchesByYear(year));
+  res.json(history.getTournaments());
+});
+
+app.get('/api/head-to-head', (req, res) => {
+  const { team1, team2 } = req.query;
+  if (!team1 || !team2) return res.status(400).json({ error: 'team1 and team2 required' });
+  const matches = history.headToHead(team1, team2).sort((a, b) => b.date.localeCompare(a.date));
+  res.json({
+    team1, team2,
+    total: matches.length,
+    team1Wins: matches.filter((m) => m.winner?.toLowerCase() === team1.toLowerCase()).length,
+    team2Wins: matches.filter((m) => m.winner?.toLowerCase() === team2.toLowerCase()).length,
+    draws: matches.filter((m) => !m.winner).length,
+    matches: matches.slice(0, 10),
+  });
+});
+
+app.get('/api/teams', (req, res) => {
+  const { name, q } = req.query;
+  if (q) return res.json(history.searchTeams(q));
+  if (!name) return res.status(400).json({ error: 'name required' });
+  const profile = history.getTeamProfile(name);
+  if (!profile) return res.status(404).json({ error: 'Team not found' });
+  const recentMatches = history.teamMatches(name).sort((a, b) => b.date.localeCompare(a.date)).slice(0, 8);
+  res.json({ profile, recentMatches });
+});
+
+app.get('/api/stats', (_req, res) => {
+  res.json(history.getStatsSummary());
 });
 
 app.listen(PORT, () => {
