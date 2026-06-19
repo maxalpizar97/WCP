@@ -1,0 +1,9 @@
+{
+  "name": "wcp",
+  "private": true,
+  "version": "1.0.0",
+  "description": "World Cup 2026 Predictions",
+  "dependencies": {
+    "@vercel/kv": "^3.0.0"
+  }
+}

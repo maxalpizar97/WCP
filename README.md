@@ -6,8 +6,11 @@ Predict match outcomes for the 2026 FIFA World Cup.
 
 ```
 WCP/
+├── api/      # Vercel serverless API (production)
 ├── client/   # React + Vite frontend
-├── server/   # Express API
+├── lib/      # Shared storage helpers
+├── server/   # Express API (local development)
+├── vercel.json
 └── README.md
 ```
 
@@ -57,6 +60,24 @@ App runs at `http://localhost:5173`.
   "confidence": 0.65
 }
 ```
+
+## Deploy on Vercel
+
+This repo is configured for Vercel out of the box:
+
+1. Go to [vercel.com/new](https://vercel.com/new) and import `maxalpizar97/WCP`.
+2. Leave **Root Directory** as `.` (repo root) — `vercel.json` handles the build.
+3. Click **Deploy**.
+
+Vercel will build the React app from `client/` and deploy API routes from `api/`.
+
+### Persistent predictions (recommended)
+
+By default, predictions use in-memory storage on Vercel (data resets on cold starts). For persistence:
+
+1. In your Vercel project, go to **Storage → Create Database → KV**.
+2. Connect the KV store to the project — Vercel auto-sets `KV_REST_API_URL` and `KV_REST_API_TOKEN`.
+3. Redeploy.
 
 ## Git remote
 
